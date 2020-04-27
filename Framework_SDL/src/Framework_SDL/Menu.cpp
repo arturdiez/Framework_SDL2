@@ -9,7 +9,7 @@ Menu::Menu() {
 
 	mGraphics = Graphics::Instance();
 
-	mBackground = new Texture("bg.jpg");
+	//mBackground = new Texture("bg.jpg");
 
 	playButton = new Texture("play", "ARCADE.TTF", 73, { 255, 0, 0 });
 	playButton->Pos(Vector2(200,200));
@@ -23,6 +23,7 @@ Menu::Menu() {
 }
 
 void Menu::EarlyUpdate() {
+	mTimer->Reset();
 	
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
@@ -64,25 +65,24 @@ void Menu::LateUpdate() {
 
 
 	mInputManager->UpdatePreviousInput();
-	mTimer->Update();
 }
 
 void Menu::Render() {
 	mGraphics->Clear();
 
-	mBackground->Render();
+	//mBackground->Render();
 	playButton->Render();
 	exitButton->Render();
 
-	mScoreTest->Render();
+	//mScoreTest->Render();
 
 	mGraphics->Render();
 }
 
 Menu::~Menu() {
 
-	delete mBackground;
-	mBackground = nullptr;
+	//delete mBackground;
+	//mBackground = nullptr;
 
 	delete exitButton;
 	exitButton = nullptr;
@@ -90,8 +90,8 @@ Menu::~Menu() {
 	delete playButton;
 	playButton = nullptr;
 
-	delete mScoreTest;
-	mScoreTest = nullptr;
+	//delete mScoreTest;
+	//mScoreTest = nullptr;
 
 	/*AudioManager::Release();
 	mAudioManager = nullptr;

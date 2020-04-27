@@ -10,8 +10,9 @@
 class Graphics {
 
 public:
-	static const int SCREEN_WIDTH = 800;
-	static const int SCREEN_HEIGHT = 600;
+	static const int SCREEN_WIDTH = 1280;
+	static const int SCREEN_HEIGHT = 768;
+	static const int CELL_SIZE = 32;
 
 private:
 	static Graphics* sInstance;

@@ -10,11 +10,11 @@ Player::Player() {
 	mScores = 0;
 	mLives = 3;
 
-	mTexture = new Texture("player_sprite.png", 0, 0, 64, 64);
+	mTexture = new Texture("Player.png", 0, 0, 64, 64);
 	mTexture->Parent(this);
 	mTexture->Pos(Vector2(64, 64));
 
-	mSpeed = 100;
+	mSpeed = 200;
 
 	for (int i = 0; i < MAX_BULLETS; ++i) {
 		mBullets[i] = new Bullet();
