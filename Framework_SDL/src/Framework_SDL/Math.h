@@ -1,9 +1,11 @@
 #ifndef _MATH_H
 #define _MATH_H
 #include <math.h>
+#include <vector>
 
 #define PI 3.14159265
 #define DEG_TO_RAD PI / 180.0f
+#define RAD_TO_DEG (180.0f / (float)PI)
 
 	struct Vector2 {
 
@@ -50,6 +52,31 @@
 		Vector2 operator -() const {
 			return Vector2(-x, -y);
 		}
+		inline void operator*=(float scalar)
+		{
+			x *= scalar;
+			y *= scalar;
+		}
+	
+		inline Vector2 operator/(float scalar)
+		{
+			return Vector2(x / scalar, y / scalar);
+		}
+		inline void operator/=(float scalar)
+		{
+			x /= scalar;
+			y /= scalar;
+		}
+		inline bool operator==(const Vector2& rhs) const
+		{
+			return (x == rhs.x)
+				&& (y == rhs.y);
+		}
+		inline bool operator!=(const Vector2& rhs) const
+		{
+			return !operator==(rhs);
+		}
+
 	};
 
 	inline Vector2 operator +(const Vector2& lhs, const Vector2& rhs) {
@@ -66,6 +93,13 @@
 
 		return Vector2(lhs.x * rhs, lhs.y * rhs);
 	}
+
+	static inline float Distance(Vector2 start, Vector2 end)
+	{
+		Vector2 v = start - end;
+		return v.Magnitude();
+	}
+
 
 	
 	inline Vector2 RotateVector(Vector2 vec, float angle) {
