@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "BoxCollider.h"
 
 Bullet::Bullet() {
 	mTimer = Timer::Instance();
@@ -11,6 +12,8 @@ Bullet::Bullet() {
 
 	//Rotate(45);
 	Reload();
+
+	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
 }
 
 Bullet::~Bullet() {
@@ -20,8 +23,9 @@ Bullet::~Bullet() {
 	mTexture = nullptr;
 }
 
-void Bullet::Fire(Vector2 pos) {
+void Bullet::Fire(Vector2 pos, Vector2 direction) {
 	Pos(pos);
+	mDirection = direction;
 	Active(true);
 }
 
@@ -31,16 +35,20 @@ void Bullet::Reload() {
 
 void Bullet::Update() {
 	if (Active()) {
-		Translate(VEC2_RIGHT * mSpeed * mTimer->DeltaTime(), local);
+		Translate(mDirection * mSpeed * mTimer->DeltaTime(), local);
 		Vector2 pos = Pos();
 
-		if (pos.x < OFFSCREEN_BUFFER || pos.x > Graphics::Instance()->SCREEN_WIDTH + OFFSCREEN_BUFFER) {
+		if (pos.x < OFFSCREEN_BUFFER || pos.x > Graphics::Instance()->SCREEN_WIDTH + OFFSCREEN_BUFFER || pos.y < OFFSCREEN_BUFFER || pos.y > Graphics::Instance()->SCREEN_HEIGHT + OFFSCREEN_BUFFER) {
 			Reload();
 		}
+	
 	}
 }
 
 void Bullet::Render() {
-	if(Active())
+	if (Active()) {
 		mTexture->Render();
+		PhysObject::Render();
+	}
+		
 }

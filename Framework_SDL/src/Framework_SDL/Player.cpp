@@ -7,18 +7,21 @@ Player::Player() {
 
 	mAnimating = false;
 
+	
 	mScores = 0;
 	mLives = 3;
 
 	mTexture = new Texture("Player.png", 0, 0, 64, 64);
 	mTexture->Parent(this);
-	mTexture->Pos(Vector2(64, 64));
+	mTexture->Pos(VEC2_ZERO);
 
 	mSpeed = 200;
 
 	for (int i = 0; i < MAX_BULLETS; ++i) {
 		mBullets[i] = new Bullet();
 	}
+
+	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
 }
 
 Player::~Player() {
@@ -63,10 +66,34 @@ void Player::HandleMovement() {
 }
 
 void Player::HandleFiring() {
-	if (mInput->KeyPressed(SDL_SCANCODE_SPACE)) {
+	if (mInput->KeyPressed(SDL_SCANCODE_UP)) {
 		for (int i = 0; i < MAX_BULLETS; ++i) {
 			if (!mBullets[i]->Active()) {
-				mBullets[i]->Fire(Pos());
+				mBullets[i]->Fire(Vector2(Pos().x, Pos().y - mTexture->ScaledDimensions().y / 2.0f), -VEC2_UP);
+				break;
+			}
+		}
+	}
+	else if (mInput->KeyPressed(SDL_SCANCODE_DOWN)) {
+		for (int i = 0; i < MAX_BULLETS; ++i) {
+			if (!mBullets[i]->Active()) {
+				mBullets[i]->Fire(Vector2(Pos().x, Pos().y + mTexture->ScaledDimensions().y/2.0f), VEC2_UP);
+				break;
+			}
+		}
+	}
+	if (mInput->KeyPressed(SDL_SCANCODE_LEFT)) {
+		for (int i = 0; i < MAX_BULLETS; ++i) {
+			if (!mBullets[i]->Active()) {
+				mBullets[i]->Fire(Vector2(Pos().x - mTexture->ScaledDimensions().x / 2.0f, Pos().y), -VEC2_RIGHT);
+				break;
+			}
+		}
+	}
+	else if (mInput->KeyPressed(SDL_SCANCODE_RIGHT)) {
+		for (int i = 0; i < MAX_BULLETS; ++i) {
+			if (!mBullets[i]->Active()) {
+				mBullets[i]->Fire(Vector2(Pos().x + mTexture->ScaledDimensions().x / 2.0f, Pos().y), VEC2_RIGHT);
 				break;
 			}
 		}
@@ -90,4 +117,5 @@ void Player::Render() {
 		for (int i = 0; i < MAX_BULLETS; ++i) {
 			mBullets[i]->Render();
 		}
+		PhysObject::Render();
 }

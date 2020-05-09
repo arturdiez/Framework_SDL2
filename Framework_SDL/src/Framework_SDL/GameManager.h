@@ -12,7 +12,7 @@ public:
 	static GameManager* Instance();
 	static void Release();
 	
-	enum GameState {MENU, PLAY, EXIT};
+	enum GameState {MENU, PLAY, COLLISIONTEST, EXIT};
 	GameState mGameState;
 	SceneManager* mCurrentScene;
 

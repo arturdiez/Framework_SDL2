@@ -58,10 +58,6 @@
 			y *= scalar;
 		}
 	
-		inline Vector2 operator/(float scalar)
-		{
-			return Vector2(x / scalar, y / scalar);
-		}
 		inline void operator/=(float scalar)
 		{
 			x /= scalar;
@@ -92,6 +88,14 @@
 	inline Vector2 operator *(const Vector2& lhs, const float& rhs) {
 
 		return Vector2(lhs.x * rhs, lhs.y * rhs);
+	}
+	inline Vector2 operator /(const Vector2& lhs, const float& rhs) {
+
+		return Vector2(lhs.x / rhs, lhs.y / rhs);
+	}
+	inline Vector2 operator /(const float& lhs, const Vector2& rhs) {
+
+		return Vector2(lhs / rhs.x, lhs / rhs.y);
 	}
 
 	static inline float Distance(Vector2 start, Vector2 end)

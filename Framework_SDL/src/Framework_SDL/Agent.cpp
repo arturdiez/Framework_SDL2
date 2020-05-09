@@ -5,8 +5,9 @@ using namespace std;
 Agent::Agent() {
 	mTimer = Timer::Instance();
 
-	mTexture = new Texture("Agent.png", 0, 0, 32, 32);
+	mTexture = new Texture("Agent.png", 0, 0, 64, 64);
 	mTexture->Parent(this);
+	mTexture->Scale(Vector2(0.5f, 0.5f));
 	mTexture->Pos(Vector2(150, 150));
 
 	velocity = Vector2(0, 0);

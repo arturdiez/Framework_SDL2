@@ -3,8 +3,9 @@
 #include "Sprite.h"
 #include "InputManager.h"
 #include "Bullet.h"
+#include "BoxCollider.h"
 
-class Player : public GameObject {
+class Player : public PhysObject {
 private:
 	Timer* mTimer;
 	InputManager* mInput;
