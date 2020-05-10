@@ -12,6 +12,15 @@ GameObject::~GameObject() {
 	mParent = nullptr;
 }
 
+//Getter & Setter Name of GO
+void GameObject::Name(std::string name) {
+	mName = name;
+}
+
+std::string GameObject::Name() {
+	return mName;
+}
+
 //Getter & Setter Position of GO
 void GameObject::Pos(Vector2 pos) {
 	mPos.x = pos.x;

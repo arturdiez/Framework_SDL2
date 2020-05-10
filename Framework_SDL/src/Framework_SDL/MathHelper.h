@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _MATHHELPER_H
+#define _MATHHELPER_H
 #include <math.h>
 #include <vector>
 

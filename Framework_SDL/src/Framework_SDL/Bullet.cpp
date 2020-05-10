@@ -1,19 +1,28 @@
 #include "Bullet.h"
 #include "BoxCollider.h"
 
-Bullet::Bullet() {
+Bullet::Bullet(bool friendly) {
 	mTimer = Timer::Instance();
 
 	mSpeed = 1000.0f;
 
+
 	mTexture = new Texture("bullet.png");
 	mTexture->Parent(this);
 	mTexture->Pos(VEC2_ZERO);
+	Name("Bullet");
 
 	//Rotate(45);
 	Reload();
 
 	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
+	if (friendly) {
+		PhysicsManager::Instance()->RegisterObject(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
+
+	}
+	else {
+		PhysicsManager::Instance()->RegisterObject(this, PhysicsManager::CollisionLayers::HostileProjectiles);
+	}
 }
 
 Bullet::~Bullet() {
@@ -21,6 +30,10 @@ Bullet::~Bullet() {
 
 	delete mTexture;
 	mTexture = nullptr;
+}
+
+bool Bullet::IgnoreCollisions() {
+	return !Active();
 }
 
 void Bullet::Fire(Vector2 pos, Vector2 direction) {
@@ -31,6 +44,12 @@ void Bullet::Fire(Vector2 pos, Vector2 direction) {
 
 void Bullet::Reload() {
 	Active(false);
+}
+
+void Bullet::Hit(PhysObject* other) {
+
+	Reload();
+	std::cout << "Object : "<< other->Name() << " HIT\n";
 }
 
 void Bullet::Update() {

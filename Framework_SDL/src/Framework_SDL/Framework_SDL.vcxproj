@@ -178,6 +178,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="PhysObject.cpp" />
     <ClCompile Include="Play.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -202,10 +203,12 @@
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="Math.h" />
+    <ClInclude Include="MathHelper.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="PhysicsHelper.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="PhysObject.h" />
     <ClInclude Include="Play.h" />
     <ClInclude Include="Player.h" />

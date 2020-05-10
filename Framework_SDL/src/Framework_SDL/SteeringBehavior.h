@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "Agent.h"
-#include "Math.h"
+#include "MathHelper.h"
 #include "Path.h"
 #include "Graph.h"
 #include <queue>

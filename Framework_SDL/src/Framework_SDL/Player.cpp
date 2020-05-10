@@ -6,6 +6,7 @@ Player::Player() {
 	mInput = InputManager::Instance();
 
 	mAnimating = false;
+	mWasHit = false;
 
 	
 	mScores = 0;
@@ -14,14 +15,17 @@ Player::Player() {
 	mTexture = new Texture("Player.png", 0, 0, 64, 64);
 	mTexture->Parent(this);
 	mTexture->Pos(VEC2_ZERO);
+	Name("Player");
 
 	mSpeed = 200;
 
 	for (int i = 0; i < MAX_BULLETS; ++i) {
-		mBullets[i] = new Bullet();
+		mBullets[i] = new Bullet(true);
 	}
 
 	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
+
+	PhysicsManager::Instance()->RegisterObject(this, PhysicsManager::CollisionLayers::Friendly);
 }
 
 Player::~Player() {
@@ -35,6 +39,22 @@ Player::~Player() {
 		delete mBullets[i];
 		mBullets[i] = nullptr;
 	}
+}
+
+
+bool Player::IgnoreCollisions() {
+	return mLives <= 0;
+}
+
+
+void Player::Hit(PhysObject* other) {
+	mWasHit = true;
+	std::cout << "Object : " << Name() << " HIT\n";
+}
+
+bool Player::WasHit() {
+	
+	return mWasHit;
 }
 
 bool Player::IsAnimating() {

@@ -1,5 +1,5 @@
 #pragma once
-#include"Math.h"
+#include"MathHelper.h"
 #include <string>
 
 struct node;

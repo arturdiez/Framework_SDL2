@@ -1,13 +1,14 @@
 #ifndef _GAMEOBJECT_H
 #define _GAMEOBJECT_H
 
-#include "Math.h"
+#include "MathHelper.h"
 
 class GameObject {
 	//Variables
 public:
 	enum SPACE {local = 0, world = 1};
 private:
+	std::string mName;
 	Vector2 mPos;
 	float mRotation;
 	Vector2 mScale;
@@ -20,6 +21,10 @@ public:
 	//Constructor & Deconstructor
 	GameObject(Vector2 pos = VEC2_ZERO);
 	~GameObject();
+
+	//Getter & Setter Object Name
+	void Name(std::string name);
+	std::string Name();
 
 	//Getter & Setter Position
 	void Pos(Vector2 pos);

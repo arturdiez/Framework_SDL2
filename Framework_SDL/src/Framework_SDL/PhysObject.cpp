@@ -1,8 +1,11 @@
 #include "PhysObject.h"
-#include "CircleCollider.h"
+#include "PhysicsManager.h"
+#include "PhysicsHelper.h"
 
 PhysObject::PhysObject() {
+
 	mBroadPhaseCollider = nullptr;
+	mId = 0;
 }
 
 PhysObject::~PhysObject() {
@@ -16,6 +19,32 @@ PhysObject::~PhysObject() {
 		delete mBroadPhaseCollider;
 		mBroadPhaseCollider = nullptr;
 	}
+
+	if (mId != 0) {
+		PhysicsManager::Instance()->UnregisterObject(mId);
+	}
+}
+
+unsigned long PhysObject::GetId() {
+	return mId;
+}
+
+bool PhysObject::CheckCollision(PhysObject* other) {
+	
+	if (IgnoreCollisions() || other->IgnoreCollisions()) {
+		return false;
+	}
+		
+	return ColliderColliderCheck(mBroadPhaseCollider, other->mBroadPhaseCollider);
+}
+
+void PhysObject::Hit(PhysObject* hit) {
+	
+}
+
+bool PhysObject::IgnoreCollisions() {
+
+	return false;
 }
 
 void PhysObject::AddCollider(Collider* collider, Vector2 localPos) {

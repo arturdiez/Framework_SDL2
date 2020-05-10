@@ -3,15 +3,18 @@
 #include "SceneManager.h"
 #include "Player.h"
 #include "Obstacle.h"
+#include "PhysicsManager.h"
 
 class CollisionTest : public SceneManager {
 private:
 	Vector2 mMouseCoords;
-	InputManager* mInputManager;
-
-	Timer* mTimer;
 
 	Graphics* mGraphics;
+
+	InputManager* mInputManager;
+	PhysicsManager* mPhysicsManager;
+
+	Timer* mTimer;
 
 	Player* mPlayer;
 	Obstacle* mObstacle;

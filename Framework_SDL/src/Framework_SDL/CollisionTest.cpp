@@ -1,11 +1,16 @@
 #include "CollisionTest.h"
 
 CollisionTest::CollisionTest() {
+	mGraphics = Graphics::Instance();
 	mTimer = Timer::Instance();
 
 	mInputManager = InputManager::Instance();
-
-	mGraphics = Graphics::Instance();
+	mPhysicsManager = PhysicsManager::Instance();
+	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Friendly, PhysicsManager::CollisionFlags::Hostile); //Friendly collides with hostile
+	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::FriendlyProjectiles, PhysicsManager::CollisionFlags::Hostile); //Friendly projectiles  collides with hostile 
+	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Hostile, PhysicsManager::CollisionFlags::Friendly | PhysicsManager::CollisionFlags::FriendlyProjectiles);//Hostile collides with friendly projectiles and friendly 
+	//mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::HostileProjectiles, PhysicsManager::CollisionFlags::Friendly);//Hostile projectiles  collides with friendly 
+	
 
 	mPlayer = new Player();
 	mPlayer->Pos(Vector2(64, 64));
@@ -38,7 +43,7 @@ void CollisionTest::Update() {
 void CollisionTest::LateUpdate() {
 	//COLLISION DETECTION
 
-
+	mPhysicsManager->Update();
 	mInputManager->UpdatePreviousInput();
 }
 
@@ -60,6 +65,9 @@ CollisionTest::~CollisionTest() {
 
 	InputManager::Release();
 	mInputManager = nullptr;
+
+	PhysicsManager::Release();
+	mPhysicsManager = nullptr;
 
 	Timer::Release();
 	mTimer = nullptr;
