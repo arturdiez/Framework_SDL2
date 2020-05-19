@@ -14,6 +14,8 @@ public:
 	~BoxCollider();
 
 	Vector2 GetFurthestPoint() override;
+
+	Vector2 GetVertexPos(int index);
 private:
 	void AddVert(int index, Vector2 pos);
 };

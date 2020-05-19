@@ -7,8 +7,9 @@ Obstacle::Obstacle() {
 	mTexture->Scale(Vector2(2, 2));
 	Name("Obstacle");
 
-
-	mLives = 10000;
+	Active(true);
+	mLives = 5;
+	
 
 	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
 	PhysicsManager::Instance()->RegisterObject(this, PhysicsManager::CollisionLayers::Hostile);
@@ -31,10 +32,15 @@ void Obstacle::Hit(PhysObject* other) {
 }
 
 void Obstacle::Update() {
-	//IgnoreCollisions();//----------------/!
+	if (mLives <= 0) {
+		Active(false);
+	}
 }
 
 void Obstacle::Render() {
-	mTexture->Render();
-	PhysObject::Render();
+	if (Active()) {
+		mTexture->Render();
+		PhysObject::Render();
+	}
+		
 }

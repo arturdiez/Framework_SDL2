@@ -28,11 +28,23 @@ void GameObject::Pos(Vector2 pos) {
 }
 Vector2 GameObject::Pos(SPACE space) {
 	if (space == local || mParent == nullptr) { return mPos; }
-		
-	Vector2 parentScale = mParent->Scale(world);
-	Vector2 rotPos = RotateVector(Vector2(mPos.x * parentScale.x, mPos.y * parentScale.y), mParent->Rotation(local));
 
-	return mParent->Pos(world) + rotPos;
+	GameObject* parent = mParent;
+	Vector2 finalPos = mPos, parentScale = VEC2_ZERO;
+
+	do
+	{
+		//Transform(Rotation(Scale Point))
+		Vector2 parentScale = mParent->Scale(local);
+		finalPos = RotateVector(Vector2(finalPos.x * parentScale.x, finalPos.y * parentScale.y), parent->Rotation(local));
+		finalPos += parent->Pos(local);
+
+		parent = parent->Parent();
+
+	} while (parent);
+		
+
+	return finalPos;
 }
 
 //Getter & Setter Rotation of GO
