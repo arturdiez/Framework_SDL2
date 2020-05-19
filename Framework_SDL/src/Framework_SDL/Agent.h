@@ -1,6 +1,6 @@
 #pragma once
 #include <minmax.h>
-#include "Math.h"
+#include "MathHelper.h"
 #include "SteeringBehavior.h"
 #include "Path.h"
 #include "Sprite.h"

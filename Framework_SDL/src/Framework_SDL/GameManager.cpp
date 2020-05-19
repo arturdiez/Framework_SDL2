@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Menu.h"
 #include "Play.h"
+#include "CollisionTest.h"
 
 GameManager* GameManager::sInstance = nullptr;
 
@@ -59,8 +60,10 @@ void GameManager::Run() {
 			{
 			case GameState::MENU:
 				delete mCurrentScene;
-				mCurrentScene = new Play();
-				mGameState = GameState::PLAY;
+				mCurrentScene = new CollisionTest();
+				mGameState = GameState::COLLISIONTEST;
+				/*mCurrentScene = new Play();
+				mGameState = GameState::PLAY;*/
 				break;
 			}
 			break;

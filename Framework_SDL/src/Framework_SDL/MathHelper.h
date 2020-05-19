@@ -1,5 +1,5 @@
-#ifndef _MATH_H
-#define _MATH_H
+#ifndef _MATHHELPER_H
+#define _MATHHELPER_H
 #include <math.h>
 #include <vector>
 
@@ -58,10 +58,6 @@
 			y *= scalar;
 		}
 	
-		inline Vector2 operator/(float scalar)
-		{
-			return Vector2(x / scalar, y / scalar);
-		}
 		inline void operator/=(float scalar)
 		{
 			x /= scalar;
@@ -93,6 +89,14 @@
 
 		return Vector2(lhs.x * rhs, lhs.y * rhs);
 	}
+	inline Vector2 operator /(const Vector2& lhs, const float& rhs) {
+
+		return Vector2(lhs.x / rhs, lhs.y / rhs);
+	}
+	inline Vector2 operator /(const float& lhs, const Vector2& rhs) {
+
+		return Vector2(lhs / rhs.x, lhs / rhs.y);
+	}
 
 	static inline float Distance(Vector2 start, Vector2 end)
 	{
@@ -105,6 +109,20 @@
 	inline Vector2 RotateVector(Vector2 vec, float angle) {
 		float radAngle = (float)(angle*DEG_TO_RAD);
 		return Vector2((float)(vec.x * cos(radAngle) - vec.y * sin(radAngle)), (float)(vec.x * sin(radAngle) + vec.y * cos(radAngle)));
+	}
+
+	inline float Dot(const Vector2& vec1, const Vector2& vec2) {
+		return vec1.x * vec2.x + vec1.y * vec2.y;
+	}
+
+	inline float Clamp(const float& value, const float& min, const float& max) {
+		if (value > max) {
+			return max;
+		}
+		if (value < min) {
+			return min;
+		}
+		return value;
 	}
 
 	inline Vector2 Lerp(Vector2& start, Vector2& end, float time) {
