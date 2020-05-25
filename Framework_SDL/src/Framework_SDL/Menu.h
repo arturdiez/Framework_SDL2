@@ -19,6 +19,7 @@ private:
 
 
 	Texture* playButton;
+	Texture* collisionButton;
 	Texture* exitButton;
 
 	Scoreboard* mScoreTest;

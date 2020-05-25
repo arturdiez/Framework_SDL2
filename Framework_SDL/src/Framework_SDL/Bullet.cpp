@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include "BoxCollider.h"
+#include "CircleCollider.h"
 
 Bullet::Bullet(bool friendly) {
 	mTimer = Timer::Instance();
@@ -15,7 +15,8 @@ Bullet::Bullet(bool friendly) {
 	//Rotate(45);
 	Reload();
 
-	AddCollider(new BoxCollider(mTexture->ScaledDimensions()));
+	AddCollider(new CircleCollider((mTexture->ScaledDimensions().x/2.0f),true));
+
 	if (friendly) {
 		PhysicsManager::Instance()->RegisterObject(this, PhysicsManager::CollisionLayers::FriendlyProjectiles);
 

@@ -1,10 +1,11 @@
 #include "CollisionTest.h"
 
 CollisionTest::CollisionTest() {
+
 	mGraphics = Graphics::Instance();
 	mTimer = Timer::Instance();
-
 	mInputManager = InputManager::Instance();
+
 	mPhysicsManager = PhysicsManager::Instance();
 	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::Friendly, PhysicsManager::CollisionFlags::Hostile); //Friendly collides with hostile
 	mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::FriendlyProjectiles, PhysicsManager::CollisionFlags::Hostile); //Friendly projectiles  collides with hostile 
@@ -12,8 +13,9 @@ CollisionTest::CollisionTest() {
 	//mPhysicsManager->SetLayerCollisionMask(PhysicsManager::CollisionLayers::HostileProjectiles, PhysicsManager::CollisionFlags::Friendly);//Hostile projectiles  collides with friendly 
 	
 
+
 	mPlayer = new Player();
-	mPlayer->Pos(Vector2(64, 64));
+	mPlayer->Pos(Vector2(100, (Graphics::SCREEN_HEIGHT / 2) ));
 
 	mObstacle = new Obstacle();
 	mObstacle->Pos(Vector2(Graphics::SCREEN_WIDTH / 2.0f, Graphics::SCREEN_HEIGHT / 2.0f));
@@ -44,6 +46,9 @@ void CollisionTest::LateUpdate() {
 	//COLLISION DETECTION
 
 	mPhysicsManager->Update();
+	if (mInputManager->KeyPressed(SDL_SCANCODE_ESCAPE)) {
+		mSceneState = SceneState::EXIT;
+	}
 	mInputManager->UpdatePreviousInput();
 }
 

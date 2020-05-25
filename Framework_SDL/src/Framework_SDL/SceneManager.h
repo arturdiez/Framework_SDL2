@@ -9,7 +9,7 @@ private:
 	static SceneManager* sInstance;
 
 public:
-	enum SceneState {RUNNING, GOTO, EXIT};
+	enum SceneState {RUNNING, GOTO_PLAY, GOTO_COLLISION, EXIT};
 	SceneState getSceneState();
 	SceneState mSceneState;
 

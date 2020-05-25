@@ -12,14 +12,18 @@ Menu::Menu() {
 	//mBackground = new Texture("bg.jpg");
 
 	playButton = new Texture("play", "ARCADE.TTF", 73, { 255, 0, 0 });
-	playButton->Pos(Vector2(200,200));
+	playButton->Pos(Vector2(Graphics::SCREEN_WIDTH/2, (Graphics::SCREEN_HEIGHT / 2) - 150));
+
+	collisionButton = new Texture("collision", "ARCADE.TTF", 73, { 255, 0, 0 });
+	collisionButton->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, Graphics::SCREEN_HEIGHT / 2));
+
 	exitButton = new Texture("exit", "ARCADE.TTF", 73, { 255, 0, 0 });
-	exitButton->Pos(Vector2(200, 400));
+	exitButton->Pos(Vector2(Graphics::SCREEN_WIDTH / 2, (Graphics::SCREEN_HEIGHT / 2) + 150));
 
-	mScoreTest = new Scoreboard();
+	//mScoreTest = new Scoreboard();
 
-	mScoreTest->Pos(Vector2(200.0f,500.0f));
-	mScoreTest->Score(0);
+	//mScoreTest->Pos(Vector2(200.0f,500.0f));
+	//mScoreTest->Score(0);
 }
 
 void Menu::EarlyUpdate() {
@@ -60,9 +64,14 @@ void Menu::LateUpdate() {
 	if (((mInputManager->MousePos().x >= playButton->Pos().x - playButton->mRenderRect.w / 2) && (mInputManager->MousePos().x <= playButton->Pos().x + playButton->mRenderRect.w / 2)) &&
 		((mInputManager->MousePos().y >= playButton->Pos().y - playButton->mRenderRect.h / 2) && (mInputManager->MousePos().y <= playButton->Pos().y + playButton->mRenderRect.h / 2)) &&
 		clicked) {
-		mSceneState = SceneState::GOTO;
+		mSceneState = SceneState::GOTO_PLAY;
 	}
 
+	if (((mInputManager->MousePos().x >= collisionButton->Pos().x - collisionButton->mRenderRect.w / 2) && (mInputManager->MousePos().x <= collisionButton->Pos().x + collisionButton->mRenderRect.w / 2)) &&
+		((mInputManager->MousePos().y >= collisionButton->Pos().y - collisionButton->mRenderRect.h / 2) && (mInputManager->MousePos().y <= collisionButton->Pos().y + collisionButton->mRenderRect.h / 2)) &&
+		clicked) {
+		mSceneState = SceneState::GOTO_COLLISION;
+	}
 
 	mInputManager->UpdatePreviousInput();
 }
@@ -72,6 +81,7 @@ void Menu::Render() {
 
 	//mBackground->Render();
 	playButton->Render();
+	collisionButton->Render();
 	exitButton->Render();
 
 	//mScoreTest->Render();
@@ -89,6 +99,9 @@ Menu::~Menu() {
 
 	delete playButton;
 	playButton = nullptr;
+
+	delete collisionButton;
+	collisionButton = nullptr;
 
 	//delete mScoreTest;
 	//mScoreTest = nullptr;

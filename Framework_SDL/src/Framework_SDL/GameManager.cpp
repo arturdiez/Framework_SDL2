@@ -53,17 +53,35 @@ void GameManager::Run() {
 				mCurrentScene = nullptr;
 				mGameState = GameState::EXIT;
 				break;
+			case GameState::PLAY:
+				delete mCurrentScene;
+				mCurrentScene = new Menu();
+				mGameState = GameState::MENU;
+				break;
+			case GameState::COLLISIONTEST:
+				delete mCurrentScene;
+				mCurrentScene = new Menu();
+				mGameState = GameState::MENU;
+				break;
 			}
 			break;
-		case SceneManager::SceneState::GOTO:
+		case SceneManager::SceneState::GOTO_PLAY:
+			switch (mGameState)
+			{
+			case GameState::MENU:
+				delete mCurrentScene;
+				mCurrentScene = new Play();
+				mGameState = GameState::PLAY;
+				break;
+			}
+			break;
+		case SceneManager::SceneState::GOTO_COLLISION:
 			switch (mGameState)
 			{
 			case GameState::MENU:
 				delete mCurrentScene;
 				mCurrentScene = new CollisionTest();
 				mGameState = GameState::COLLISIONTEST;
-				/*mCurrentScene = new Play();
-				mGameState = GameState::PLAY;*/
 				break;
 			}
 			break;

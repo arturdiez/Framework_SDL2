@@ -49,7 +49,7 @@ bool Player::IgnoreCollisions() {
 
 void Player::Hit(PhysObject* other) {
 	mWasHit = true;
-	std::cout << "Object : " << Name() << " HIT\n";
+	//std::cout << "Object : " << Name() << " HIT\n";
 }
 
 bool Player::WasHit() {

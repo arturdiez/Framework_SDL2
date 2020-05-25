@@ -5,14 +5,15 @@
 #include "BoxCollider.h"
 #include "MathHelper.h"
 
+//Retorna true si el punto se encuentra dentro del poligono
 inline bool PointInPolygon(Vector2* verts, int vertCount, const Vector2& point) {
 
 	bool retVal = false;
 
 	for (int i = 0, j = vertCount - 1 < vertCount; j - i++;) {
-		if ((verts[i].y >= point.y) != (verts[j].y >= point.y)) {
-			Vector2 vec1 = (verts[i] - verts[j]).Normalized();
-			Vector2 proj = verts[j] +  vec1 * Dot(point - verts[j], vec1);
+		if ((verts[i].y >= point.y) != (verts[j].y >= point.y)) { //descartar segmentos por encima o debajo del punto
+			Vector2 vec1 = (verts[i] - verts[j]).Normalized(); //normalizar segmento entre vertices
+			Vector2 proj = verts[j] +  vec1 * Dot(point - verts[j], vec1); //proyectar el punto en el segmento
 			if (proj.x > point.x) {
 				retVal = !retVal;
 			}
@@ -21,11 +22,15 @@ inline bool PointInPolygon(Vector2* verts, int vertCount, const Vector2& point) 
 
 	return retVal;
 }
-
+//Retorna la distancia del punto mas cercano a otro punto contenido en un segmento
 inline float PointToLineDistance(const Vector2& lineStart, const Vector2& lineEnd, const Vector2& point) {
+	//pendiente de la recta
 	Vector2 slope = lineEnd - lineStart;
 
+	//Proyeccion a partir del punto (radio) y el inicio del segmento (vertice)
+	//el clamp actua a modo de seleccionar el punto dentro del segmento (lineend - linestart) que conforman dos vertices
 	float param = Clamp(Dot(point - lineStart , slope) / slope.MagnitudeSqr(), 0.0f, 1.0f);
+
 
 	Vector2 nearestPoint = lineStart + slope * param;
 
@@ -48,12 +53,13 @@ inline bool BoxCircleCollision(BoxCollider* box, CircleCollider* circle) {
 	float radius = circle->GetRadius();
 	Vector2 circlePos = circle->Pos();
 
-	for (int i = 0; i < 4; i++) { //check if any vertex is inside circle
+	//check if any vertex is inside circle
+	for (int i = 0; i < 4; i++) { 
 		if ((quad[i] - circlePos).Magnitude() < radius) {
 			return true;
 		}
 	}
-	
+	//Check if segment is inside circle
 	if (PointToLineDistance(box->GetVertexPos(0), box->GetVertexPos(1), circlePos) < radius ||
 		PointToLineDistance(box->GetVertexPos(0), box->GetVertexPos(2), circlePos) < radius ||
 		PointToLineDistance(box->GetVertexPos(2), box->GetVertexPos(3), circlePos) < radius ||
@@ -62,7 +68,7 @@ inline bool BoxCircleCollision(BoxCollider* box, CircleCollider* circle) {
 		return true;
 	}
 
-	
+	//Check if circle is inside polygon
 	if (PointInPolygon(quad, 4, circlePos)) {
 		
 		return true;
@@ -70,7 +76,7 @@ inline bool BoxCircleCollision(BoxCollider* box, CircleCollider* circle) {
 
 	return false;
 }
-
+//SAT
 inline bool BoxBoxCollision(BoxCollider* b1, BoxCollider* b2) {
 	Vector2 projAxis[4];
 

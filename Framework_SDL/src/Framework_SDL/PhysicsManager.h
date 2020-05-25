@@ -6,7 +6,7 @@
 class PhysicsManager {
 
 public: 
-	
+	//Colision capas
 	enum class CollisionLayers {
 		Friendly = 0,
 		FriendlyProjectiles,
@@ -15,19 +15,22 @@ public:
 		//To know lngth of layers
 		MaxLayers
 	};
-
+	//Colision flags
 	enum class CollisionFlags {
 		None				= 0x00,
 		Friendly			= 0x01,
 		FriendlyProjectiles = 0x02,
 		Hostile				= 0x04,
 		HostileProjectiles  = 0x08
+	
 
 	};
 private:
 	static PhysicsManager* sInstance;
 
+	//Vector de capas de colision
 	std::vector<PhysObject*>mCollisionLayers[static_cast<unsigned int>(CollisionLayers::MaxLayers)];
+	//Mascaras
 	std::bitset<static_cast<unsigned int>(CollisionLayers::MaxLayers)> mLayerMasks[static_cast<unsigned int>(CollisionLayers::MaxLayers)];
 	
 	unsigned long mLastId;

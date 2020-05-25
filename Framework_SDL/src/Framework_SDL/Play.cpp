@@ -91,13 +91,14 @@ void Play::setMap() {
 
 void Play::EarlyUpdate() {
 	mTimer->Reset();
+
+	SDL_Event event;
+	SDL_PollEvent(&event);
+
 	mInputManager->Update();
 
 }
 void Play::Update() {
-
-	SDL_Event event;
-	SDL_PollEvent(&event);
 
 	mPlayer->Update();
 
@@ -139,14 +140,15 @@ void Play::Update() {
 }
 
 void Play::LateUpdate() {
+	if (mInputManager->KeyPressed(SDL_SCANCODE_ESCAPE)) {
+		mSceneState = SceneState::EXIT;
+	}
 	mInputManager->UpdatePreviousInput();
 }
 
 void Play::Render() {
 	mGraphics->Clear();
 
-	
-	
 	drawMaze();
 	drawCoin();
 	mPlayer->Render();
