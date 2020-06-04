@@ -76,6 +76,7 @@ inline bool BoxCircleCollision(BoxCollider* box, CircleCollider* circle) {
 
 	return false;
 }
+
 //SAT
 inline bool BoxBoxCollision(BoxCollider* b1, BoxCollider* b2) {
 	Vector2 projAxis[4];
