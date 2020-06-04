@@ -33,6 +33,10 @@ void CollisionTest::EarlyUpdate() {
 			break;
 		}
 	}
+	if (mInputManager->KeyPressed(SDL_SCANCODE_ESCAPE)) {
+		mSceneState = SceneState::EXIT;
+	}
+
 	mInputManager->Update();
 }
 
@@ -44,11 +48,8 @@ void CollisionTest::Update() {
 
 void CollisionTest::LateUpdate() {
 	//COLLISION DETECTION
-
 	mPhysicsManager->Update();
-	if (mInputManager->KeyPressed(SDL_SCANCODE_ESCAPE)) {
-		mSceneState = SceneState::EXIT;
-	}
+	
 	mInputManager->UpdatePreviousInput();
 }
 
